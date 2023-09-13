@@ -1,0 +1,19 @@
+.cardContainer {
+    width: 17rem;
+    height: 14rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    color: black;
+    margin: 8px;
+    box-shadow: -3px 3px 3px rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+}
+
+.cardContainer img{
+    width: 17rem;
+    height: 10rem;
+    object-fit: cover;
+    border-radius: 2px 2px 0 0;
+}

@@ -1,0 +1,34 @@
+.formContainer{
+    display: flex;
+    justify-content: space-around;
+    background-color: lightskyblue;
+}
+
+.formInfo{
+    display: flex;
+    flex-direction: column;
+    width: 30rem;
+    height: 30rem;
+    border: 2px solid black;
+}
+
+.formInfo h2{
+    text-align: center;
+}
+
+.formInfo label{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.formInfo input{
+    height: 1.5rem;
+    width: 25rem;
+    border-radius: 1px;
+}
+
+.formError{
+    color: red;
+    font-size: 13px;
+    font-weight: bold;
+}

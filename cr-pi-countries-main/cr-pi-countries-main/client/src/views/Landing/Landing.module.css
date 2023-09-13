@@ -1,0 +1,59 @@
+body{
+    margin: 0;
+    font-family: "Avenir Next",Helvetica,Arial,sans-serif;
+}
+
+.landingContainer {
+    position: relative; /* Agregar posición relativa para posicionar el pseudo-elemento */
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente el contenido */
+    align-items: center; /* Centrar verticalmente el contenido */
+    background-image: url('https://images.unsplash.com/flagged/photo-1585324853527-1c567d53bb72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1848&q=80');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  /* Pseudo-elemento para aplicar la opacidad solo al fondo */
+  .landingContainer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #023e8a; /* Color con opacidad */
+    z-index: -1; /* Colocar detrás del contenido */
+  }
+  
+  .landingInfo {
+    background-color: #023e8ab3; /* Opacidad del fondo */
+    width: 100%;
+    height: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+.landingInfo h1{
+    margin: 0 0 20px 0;
+    color:white;
+}
+
+.landingInfo button{
+    width: 10rem;
+    height: 2rem;
+    background-color: #ffb703;
+    color: black;
+    border: 1px solid #023e8a;
+    border-radius: 2px;
+}
+
+.landingInfo button:hover{
+    background-color: #0a8754;
+    border: 1px solid white;
+    color: white;
+}

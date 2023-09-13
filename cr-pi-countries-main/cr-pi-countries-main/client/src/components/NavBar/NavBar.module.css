@@ -1,0 +1,36 @@
+.navBarContainer{
+    background-color: #e2fdff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+img, p, .navLink, .searchBar{
+    margin: 3px 0;
+}
+
+.navBarContainer img{
+    height: 3rem;
+    padding-left: 1rem;
+}
+
+.navBarContainer p{
+    padding-right: 10rem;
+    font-weight: bold;
+}
+
+.navLink{
+    padding: 0 2rem;
+    text-decoration: none;
+    color: black;
+}
+
+.navLink:hover{
+    color: #fb8500;
+}
+
+
+.searchBar{
+    display: flex;
+    justify-content: end;
+}
