@@ -1,13 +1,14 @@
 import style from './ActCard.module.css'
 
-const ActCard = ({name,difficulty,duration,season,countries}) => {
+const ActCard = ({id,name,difficulty,duration,seasons, countries, onClose}) => {
     return(
         <div className={style.actCardContainer}>
             <p>Name: {name}</p>
             <p>Difficulty: {difficulty}</p>
             <p>Duration: {duration}</p>
-            <p>Seasons: {season}</p>
+            <p>Seasons: {seasons}</p>
             <p>Countries: {countries}</p>
+            <button onClick={()=>onClose(id)}>X</button>
         </div>
     )
 }

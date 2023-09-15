@@ -8,7 +8,7 @@ module.exports = (sequelize) => {
           defaultValue: Sequelize.UUIDV4,
           primaryKey:true
         },
-        name: {
+        activityName: {
           type: DataTypes.STRING,
           unique: true,
           allowNull: false
@@ -20,12 +20,12 @@ module.exports = (sequelize) => {
         },
         duration: {
           type: DataTypes.INTEGER,
-          validate: { min: 1, max: 12},
+          validate: { min: 1, max: 24},
           allowNull: true,
         },
-        season: {
-          type: DataTypes.ENUM,
-          values: ['Summer', 'Autumn', 'Winter', 'Spring'],
+        seasons: {
+          type: DataTypes.ARRAY(DataTypes.STRING),
+          defaultValue: ['Summer', 'Autumn', 'Winter', 'Spring'],
           allowNull: false,
         }
       });

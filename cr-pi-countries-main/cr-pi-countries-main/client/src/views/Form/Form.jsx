@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { getActivities, getCountries, postActivity } from "../../redux/actions"
+import { getCountries, getActivities, postActivity } from "../../redux/actions"
 import { useSelector } from "react-redux"
 import ActCards from '../../components/Activities/ActCards/ActCards'
 import style from './Form.module.css'
@@ -11,10 +11,10 @@ const Form = () => {
     // state contenedor de la información ingresada al form
     const [state, setState] = useState({
         activityName:'',
-        difficulty: 0,
-        duration: '',
+        difficulty: '',
+        duration: 0,
         seasons:[], 
-        countries: []
+        countryId: []
     })
     console.log(state);
 
@@ -24,9 +24,10 @@ const Form = () => {
         difficulty: '',
         duration:'',
         seasons: '',
-        countries:''
+        countryId:''
     })
     console.log(error);
+
     // Validación errores - Al asociar prop estamos validando un único input y si no lo especificamos estaríamos validando todos los inputs al mismo tiempo 
     const formValidation = (stateAux, prop)=>{
         if(prop === 'activityName') {
@@ -59,19 +60,18 @@ const Form = () => {
             } else{setError({...error, seasons:''})}
         }
 
-        if(prop === 'countries') {
-            if(stateAux.countries.length === 0){
-                setError({...error, countries:'At least one country is required'})
-            } else{setError({...error, countries:''})}
+        if(prop === 'countryId') {
+            if(stateAux.countryId.length === 0){
+                setError({...error, countryId:'At least one country is required'})
+            } else{setError({...error, countryId:''})}
         }
     }
 
     const handleChange = (event) =>{
         // Modificación del estado con la info recibida en el input
-
-        if(event.target.name==="countries" || event.target.name==="seasons"){
+        if(event.target.name==="countryId" || event.target.name==="seasons"){
             if(event.target.value==='') return state
-            if(event.target.name==="countries" ? !state.countries.includes(event.target.value) : !state.seasons.includes(event.target.value)){
+            if(event.target.name==="countryId" ? !state.countryId.includes(event.target.value) : !state.seasons.includes(event.target.value)){
                 return setState({
                         ...state,
                         [event.target.name]: [...state[event.target.name], event.target.value]
@@ -82,11 +82,11 @@ const Form = () => {
                     [event.target.name]: event.target.value
                     })}
 
-    formValidation({
         // Primer parametro una copia del estado + la prop modificada para no esperar el re-renderizado y hacer la validación en tiempo real.
-        ...state,[event.target.name]: event.target.value
-        }, event.target.name)
         // El segundo parametro corresponde a la prop del state que estamos validando
+        formValidation({
+            ...state,[event.target.name]: event.target.value
+            }, event.target.name)  
     }
 
     const handleDelete = (event) => {
@@ -94,6 +94,7 @@ const Form = () => {
         ...state,
         [event.target.name]: [...state[event.target.name].filter(element=> element!==event.target.id)]
         })
+
     }
 
     const disableByErrors = ()=>{
@@ -111,41 +112,39 @@ const Form = () => {
     
     const disableByEmptyProps = ()=>{
         let disabledAux = true;
-            if(state.activityName === '' || state.difficulty.length < 1 || state.difficulty.length > 5 || state.seasons.length < 1 || state.countries.length < 1) {
+            if(state.activityName === '' || state.difficulty.length < 1 || state.difficulty.length > 5 || state.seasons.length < 1 || state.countryId.length < 1) {
                 disabledAux = true;
             }else{
                 disabledAux = false;
             }
             return disabledAux;
         }
-            
 
-        console.log('errors' + disableByErrors());
-        console.log('props' + disableByEmptyProps());
-
-    ////GUARDAR INFORMACION EN LA DB!!!!!!!!!!!!!!!!
+    // Guardar información en la db
 
     const activityPost = () => {
         dispatch(postActivity(state))
     }
 
-    //RENDERIZACIÓN ACTIVITIES
+    // Renderización de activities y ordenamiento
 
     const dispatch = useDispatch()
 
     const [order,setOrder] = useState(false);
-
     const handleOrder = (event) => {
         dispatch(orderCards(event.target.value))
         setOrder(!order)
     }
 
     useEffect(()=>{
+            dispatch(getCountries())
             dispatch(getActivities())
-            dispatch(getCountries())        
     },[])
 
     const countriesData = useSelector(state=>state.countries)
+    const activities = useSelector(state=>state.activities)
+
+// PENDIENTE AGREGAR A LA ETIQUETA FORM onSubmit={activityPost}
 
     return(
         <div className={style.formContainer}>
@@ -159,11 +158,11 @@ const Form = () => {
                 <label>Difficulty *</label>
                 <select name="difficulty" onChange={handleChange}>
                     <option value={''}>-- Choose one option --</option>
-                    <option value={1} id={1}>Easy</option>
-                    <option value={2} id={2}>Medium-Easy</option>
-                    <option value={3} id={3}>Medium</option>
-                    <option value={4} id={4}>Medium-Hard</option>
-                    <option value={5} id={5}>Hard</option>
+                    <option value={1} key={1}>Easy</option>
+                    <option value={2} key={2}>Medium-Easy</option>
+                    <option value={3} key={3}>Medium</option>
+                    <option value={4} key={4}>Medium-Hard</option>
+                    <option value={5} key={5}>Hard</option>
                 </select>
                 <label className={style.formError}>{error.difficulty}</label>
 
@@ -174,30 +173,38 @@ const Form = () => {
                 <label>Seasons *</label>
                 <select name='seasons' onChange={handleChange}>
                     <option value={''}>-- Choose at least one option --</option>
-                    {seasons.map(season=> <option value={season} key={season}>{season}</option>)}
+                    {seasons.map(season=> <option value={season} id={season} key={season}> {season} </option>)}
                 </select>
                 <label className={style.formError}>{error.seasons}</label>
 
                 <div>
                     {
-                        state.seasons.map((element)=> <div>
-                        <label>{element}</label> <button name='seasons' id={element} onClick={handleDelete}>X</button>
-                        </div>)
+                        state.seasons.map((element)=> 
+                            <div>
+                                <label >{element}</label> <button name='seasons' id={element} key={element} onClick={handleDelete}>X</button>
+                            </div>)
                     }
                 </div>
 
                 <label>Countries *</label>
-                <select name='countries' onChange={handleChange}>
+                <select name='countryId' onChange={handleChange}>
                     <option value={''}>-- Choose at least one option --</option>
-                    {countriesData?.map(country=><option value={country.name} key={country.name}>{country.name}</option>)}
+                    {countriesData?.map(country=><option value={country.id} key={country.id}>{country.id} - {country.name}</option>)}
                 </select>
-                <label className={style.formError}>{error.countries}</label>
+                <label className={style.formError}>{error.countryId}</label>
 
                 <div>
                     {
-                        state.countries.map((element)=> <div>
-                        <label>{element}</label> <button name='countries' id={element} onClick={handleDelete}>X</button>
-                        </div>)
+                        state.countryId.map((element)=> {
+                            const countryName = countriesData.find(
+                                (country) => country.id === element
+                            )
+                            return (
+                                <div>
+                                    <label>{element} - {countryName.name}</label> <button name='countryId' key={element} id={element} onClick={handleDelete}>X</button>
+                                </div>
+                            )
+                        })
                     }
                 </div>
                 
@@ -210,7 +217,7 @@ const Form = () => {
                     <option value="DES">Desendente</option>
                 </select>
                 
-                <ActCards/>
+                <ActCards activities = {activities}/>
             </div>
         </div>
     )

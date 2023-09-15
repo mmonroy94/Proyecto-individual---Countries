@@ -5,7 +5,6 @@ import { getCountryById } from "../../redux/actions";
 
 const Detail = () => {
     const { id } = useParams()
-    console.log('ID :' + id)
     const dispatch = useDispatch();
 
     useEffect(()=>{
@@ -19,7 +18,7 @@ const Detail = () => {
             {countryData.map(data => {
                 if(data.id === id){
                     return(
-                        <div>
+                        <div key={data.id}>
                             <img src={data.image} alt={data.id}/>
                             <p>ID: {data.id}</p>
                             <p>Nombre: {data.name}</p>
@@ -28,6 +27,7 @@ const Detail = () => {
                             <p>Continente: {data.continent}</p>
                             <p>Área: {data.area} km²</p>
                             <p>Población: {data.population}</p>
+
                         </div>
                     )                      
                 }

@@ -1,17 +1,16 @@
 import ActCard from '../ActCard/ActCard'
 import { useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
+import { deleteActivity } from '../../../redux/actions'
 import style from './ActCards.module.css'
 
-const ActCards = () => {
-    const activities = useSelector(state=>state.activities)
-
+const ActCards = ({activities}) => {
     //paginado
     const [page,setPage] = useState(1)
     const cardsPerPage = 5;
     const lastItemIndex = page * cardsPerPage; 
     const firstItemIndex = lastItemIndex - cardsPerPage;
-    const currentCards = activities.slice(firstItemIndex, lastItemIndex);
+    const currentCards = activities.slice(firstItemIndex, lastItemIndex)
 
     const nextPage = () => {
         if (page < Math.ceil(activities.length / cardsPerPage)) {
@@ -25,16 +24,27 @@ const ActCards = () => {
         }
     }
 
+    const dispatch = useDispatch()
+
+    const onClose = (id) => {
+        dispatch(deleteActivity(id))
+     };
+
     return(
         <div>
             <div className={style.actCardsContainer}>
-                {currentCards.map(activity=>{
+                {currentCards?.map(activity=>{
                     return <ActCard
                         key = {activity.id}
-                        name = {activity.name}
+                        id = {activity.id}
+                        name = {activity.activityName}
                         difficulty = {activity.difficulty}
                         duration = {activity.duration}
+                        seasons = {activity.seasons?.map(season => season).join(', ')}                       
+                        countries = {activity.Countries?.map(country => country.name).join(', ')}
+                        onClose = {onClose}
                     />
+    
                     })
                 }
             </div>

@@ -1,7 +1,6 @@
 .formContainer{
     display: flex;
     justify-content: space-around;
-    background-color: lightskyblue;
 }
 
 .formInfo{

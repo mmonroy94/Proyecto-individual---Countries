@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_COUNTRIES, GET_COUNTRY_BY_ID, GET_COUNTRY_BY_NAME, ORDER_BY_NAME, GET_ACTIVITIES, ORDER_BY_POPULATION, FILTER_BY_CONTINENT, POST_ACTIVITY } from "./action-types";
+import { GET_COUNTRIES, GET_COUNTRY_BY_ID, GET_COUNTRY_BY_NAME, ORDER_BY_NAME, GET_ACTIVITIES, ORDER_BY_POPULATION, FILTER_BY_CONTINENT, DELETE_ACTIVITY } from "./action-types";
 
 export const getCountries = (name) => {
     return async function (dispatch) {
@@ -58,16 +58,15 @@ export const filterByContinent = (continent) => {
 }
 
 export const postActivity = (state) => {
-    return async function (dispatch){ 
+    return async function (){ 
         try {
             await axios.post('http://localhost:3001/activities/',state)
-            alert('Activity created!')
+            alert('Actividad creada exitosamente!')
         } catch (error) {
             alert(error.response.data)
         }
     }
 }
-
 
 export const getActivities = () => {
     return async function (dispatch){
@@ -75,7 +74,18 @@ export const getActivities = () => {
             const dbData = await axios.get('http://localhost:3001/activities')
             const activities = dbData.data
             dispatch({ type:GET_ACTIVITIES, payload:activities})
+    
+        }catch(error){
+            alert(error.response.data)
+        }
+    }
+}
 
+export const deleteActivity = (id) => {
+    return async function (dispatch){
+        try{
+            await axios.delete(`http://localhost:3001/activities/${id}`)
+            dispatch({ type:DELETE_ACTIVITY, payload:id})
         }catch(error){
             alert(error.response.data)
         }
