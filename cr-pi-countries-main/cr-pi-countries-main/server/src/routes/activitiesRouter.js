@@ -3,7 +3,6 @@ const { createActivity, getActivities, deleteActivity } = require('../controller
 
 activitiesRouter.post('/', async(req,res) => {
     const { activityName, difficulty, duration, seasons, countryId } = req.body;
-        
     const newActivity = await createActivity( activityName, difficulty, duration, seasons, countryId )
     if(!newActivity){
         res.status(404).send(`Ya existe una actividad con el nombre ${activityName}`)        

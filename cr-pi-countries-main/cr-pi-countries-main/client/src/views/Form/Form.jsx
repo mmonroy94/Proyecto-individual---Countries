@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { getCountries, getActivities, postActivity } from "../../redux/actions"
+import { getCountries, postActivity } from "../../redux/actions"
 import { useSelector } from "react-redux"
 import ActCards from '../../components/Activities/ActCards/ActCards'
 import style from './Form.module.css'
@@ -129,22 +129,13 @@ const Form = () => {
     // Renderización de activities y ordenamiento
 
     const dispatch = useDispatch()
-
-    const [order,setOrder] = useState(false);
-    const handleOrder = (event) => {
-        dispatch(orderCards(event.target.value))
-        setOrder(!order)
-    }
+    // const activities = useSelector(state=>state.activities)
+    const countriesData = useSelector(state=>state.countries)
 
     useEffect(()=>{
             dispatch(getCountries())
-            dispatch(getActivities())
     },[])
 
-    const countriesData = useSelector(state=>state.countries)
-    const activities = useSelector(state=>state.activities)
-
-// PENDIENTE AGREGAR A LA ETIQUETA FORM onSubmit={activityPost}
 
     return(
         <div className={style.formContainer}>
@@ -212,12 +203,9 @@ const Form = () => {
             </form>
 
             <div>
-                <select onChange={handleOrder}>
-                    <option value="ASC">Ascendente</option>
-                    <option value="DES">Desendente</option>
-                </select>
                 
-                <ActCards activities = {activities}/>
+                
+                <ActCards />
             </div>
         </div>
     )

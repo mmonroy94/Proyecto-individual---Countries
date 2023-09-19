@@ -1,14 +1,13 @@
 .searchBarContainer{
     position: absolute;
-    right: 2rem;
+    right: 1rem;
 }
 
 .searchBarContainer input{
-    height: 1.8rem;
-    width: 18rem;
+    height: 2rem;
+    width: 20rem;
     border: 2px solid white;
     border-radius: 6px 0 0 6px;
-    margin-right: 5px;
 }
 
 .searchBarContainer input:focus{
@@ -16,12 +15,12 @@
 }
 
 .searchBarContainer button{
-    height: 1.8rem;
+    height: 2rem;
     width: 8rem;
     border: none;
-    border-radius: 2px;
-    background-color: #fb8500;
-    color: white;
+    border-radius: 0 3px 3px 0;
+    background-color: #EDD62D;
+    color: black;
 }
 
 .searchBarContainer button:hover{

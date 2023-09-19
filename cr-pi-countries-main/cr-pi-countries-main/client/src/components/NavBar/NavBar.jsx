@@ -5,8 +5,8 @@ import style from './NavBar.module.css'
 const NavBar = () => {
     return(
         <div className={style.navBarContainer}> 
-            <img src="https://images.vexels.com/media/users/3/154655/isolated/lists/71dccbb077597dea55dfc5b7a7af52c4-icono-de-contacto-de-pin-de-ubicacion.png" alt="pinpointer" />
-            <p>COUNTRIES</p>
+            {/* <img src='https://indd.adobe.com/content/2/2fa4e791-22ea-4a5a-8c5a-b18bc57bcdd8/3384168157854/package/fr2d/publication-web-resources/image/Globe.png' /> */}
+            <p>🌎 COUN<span>TRIES</span></p>
             
             <NavLink to='/home' className={style.navLink}>Home</NavLink>
             <NavLink to='/activities' className={style.navLink}>Activities</NavLink>

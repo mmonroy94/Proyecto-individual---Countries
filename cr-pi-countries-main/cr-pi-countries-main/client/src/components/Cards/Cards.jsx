@@ -19,14 +19,9 @@ const Cards = ({countries}) => {
         populationOrder: false
     })
 
-    console.log(order);
-
     const [ filter, setFilter ] = useState({
         continentFilter: false
     })
-
-    console.log(filter);
-
 
     // PAGINADO
     const [page,setPage] = useState(1)
@@ -34,6 +29,8 @@ const Cards = ({countries}) => {
     const lastItemIndex = page * cardsPerPage;
     const firstItemIndex = lastItemIndex - cardsPerPage;
     const currentCards = countries.slice(firstItemIndex, lastItemIndex);
+    const totalItems = countries.length;
+    const totalPages = Math.ceil(totalItems / cardsPerPage)
     
     const nextPage = () => {
         if (page < Math.ceil(countries.length / cardsPerPage)) {
@@ -84,18 +81,23 @@ const Cards = ({countries}) => {
 
     return(
         <div>
-            <div>
+            <div className={style.filtersContainer}>
+                <p>Sort by:</p>
                 <select name='alphOrder' onChange={handleOrder}>
+                    <option value={''}>-- Alphabetically --</option>
                     <option value="ASC" id='asc'>From A to Z</option>
                     <option value="DES" id='asc'>From Z to A</option>
                 </select>
 
                 <select name='populationOrder' onChange={handleOrder}>
+                    <option value={''}>-- Population --</option>
                     <option value="POPASC" id='popasc'>Least populated first</option>
                     <option value="POPDES" id='popdes'>Most populated first</option>
                 </select>
 
+                <p>Filter by:</p>
                 <select name='continentFilter' onChange={handleFilter}>
+                    <option value={''}>-- Continent --</option>
                     {continents.map(continent=><option value={continent} id={continent}>{continent}</option>)}
                 </select>
 
@@ -114,9 +116,9 @@ const Cards = ({countries}) => {
                     })
                 }
             </div>
-            <div className={style.navigationContainer}>
+            <div className={style.pageNavigatorContainer}>
                 <button onClick={previousPage}>🡨</button>
-                <p>Página actual: {page}</p>
+                <p>Showing {page} of {totalPages} pages</p>
                 <button onClick={nextPage}>🡪</button>
             </div>
         </div>
@@ -124,102 +126,3 @@ const Cards = ({countries}) => {
 }
 
 export default Cards;
-
-
-
-
-// CODIGO COMPONENTE FUNCIONANDO CORRECTAMENTE
-
-// const Cards = ({countries}) => {
-//     const dispatch = useDispatch();
-
-//     const countriesRequest = () => dispatch(getCountries())
-
-//     const [continents,setContinents] = useState([])
-//     countries.forEach(country => {
-//         if(!continents.includes(country.continent)){
-//             setContinents([...continents,country.continent])
-//         }
-//     })
-
-//     const [ order, setOrder ] = useState({
-//         pageOrder: false,
-//         populationOrder: false
-//     })
-
-//     const [ filter, setFilter ] = useState({
-//         continentFilter: false
-//     })
-
-
-//     // PAGINADO
-//     const [page,setPage] = useState(1)
-//     const cardsPerPage = 10;
-//     const lastItemIndex = page * cardsPerPage;
-//     const firstItemIndex = lastItemIndex - cardsPerPage;
-//     const currentCards = countries.slice(firstItemIndex, lastItemIndex);
-    
-//     const nextPage = () => {
-//         if (page < Math.ceil(countries.length / cardsPerPage)) {
-//             setPage(page + 1);
-//         }
-//     };
-        
-//     const previousPage = () => {
-//         if (page > 1) {
-//             setPage(page - 1);
-//         }
-//     }
-
-//     // ORDENAMIENTO 
-//     const handleOrder = (event) => {
-//         dispatch(orderCards(event.target.value))
-//         setPage(1)
-//     }
-
-//     //FILTRADO
-//     const handleFilter = (event) => {
-//         dispatch(filterByContinent(event.target.value))
-//         setPage(1)
-//     }
-
-//     return(
-//         <div>
-//             <div>
-//                 <select onChange={handleOrder}>
-//                     <option value="ASC" id='asc'>From A to Z</option>
-//                     <option value="DES" id='asc'>From Z to A</option>
-//                 </select>
-
-//                 <select onChange={handleOrder}>
-//                     <option value="POPASC" id='popasc'>Least populated first</option>
-//                     <option value="POPDES" id='popdes'>Most populated first</option>
-//                 </select>
-
-//                 <select name='filterByContinent' onChange={handleFilter}>
-//                     {continents.map(continent=><option value={continent} id={continent}>{continent}</option>)}
-//                 </select>
-
-//                 <button onClick={()=> countriesRequest()}>Show all</button>
-//             </div>
-
-//             <div className={style.cardsContainer}>
-//                 {currentCards.map(country=>{
-//                     return <Card
-//                         key = {country.id}
-//                         id = {country.id}
-//                         image = {country.image}
-//                         name = {country.name}
-//                         continent = {country.continent}
-//                     />
-//                     })
-//                 }
-//             </div>
-//             <div className={style.navigationContainer}>
-//                 <button onClick={previousPage}>🡨</button>
-//                 <p>Página actual: {page}</p>
-//                 <button onClick={nextPage}>🡪</button>
-//             </div>
-//         </div>
-//     )
-// }

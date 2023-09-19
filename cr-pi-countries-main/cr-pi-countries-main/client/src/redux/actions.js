@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_COUNTRIES, GET_COUNTRY_BY_ID, GET_COUNTRY_BY_NAME, ORDER_BY_NAME, GET_ACTIVITIES, ORDER_BY_POPULATION, FILTER_BY_CONTINENT, CLEAR_FILTERS_ORDERS, DELETE_ACTIVITY } from "./action-types";
+import { GET_COUNTRIES, GET_COUNTRY_BY_NAME, ORDER_BY_NAME, GET_ACTIVITIES, ORDER_BY_POPULATION, FILTER_BY_CONTINENT, CLEAR_FILTERS_ORDERS, DELETE_ACTIVITY, ORDER_ACTIVITIES } from "./action-types";
 
 export const getCountries = (name) => {
     return async function (dispatch) {
@@ -17,18 +17,6 @@ export const getCountries = (name) => {
             alert(error.response.data) 
         }
 
-    }
-}
-
-export const getCountryById = (id) => {
-    return async function (dispatch){ 
-        try{
-            const dbData = await axios.get(`http://localhost:3001/countries/${id}`)
-            const country = dbData.data
-            dispatch({ type:GET_COUNTRY_BY_ID, payload:country})
-        }catch(error){
-            alert(error.response.data) 
-        }
     }
 }
 
@@ -85,6 +73,19 @@ export const getActivities = () => {
             const activities = dbData.data
             dispatch({ type:GET_ACTIVITIES, payload:activities})
     
+        }catch(error){
+            alert(error.response.data)
+        }
+    }
+}
+
+export const orderActivities = (order) => {
+    console.log(order)
+    return async function (dispatch){
+        try {
+            if(order === 'ASC' || order === 'DES'){
+                dispatch({ type:ORDER_ACTIVITIES, payload: order})
+            }
         }catch(error){
             alert(error.response.data)
         }

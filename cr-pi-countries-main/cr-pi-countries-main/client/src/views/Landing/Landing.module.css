@@ -4,44 +4,49 @@ body{
 }
 
 .landingContainer {
-    position: relative; /* Agregar posición relativa para posicionar el pseudo-elemento */
+    position: relative;
     width: 100vw;
     height: 100vh;
     display: flex;
-    justify-content: center; /* Centrar horizontalmente el contenido */
-    align-items: center; /* Centrar verticalmente el contenido */
-    background-image: url('https://www.protegetuviaje.com/wp-content/uploads/2023/03/aliados-header-scaled.jpg.webp');
+    justify-content: end;
+    align-items: center;
+    background-image: url('../../../landing_image.png');
+    background-color: #d8fff6fd;
     background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    background-size:contain;
+    background-position:0%;
   }
 
   .landingInfo {
-    width: 100%;
-    height: 10rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items:flex-start;
-    margin-left: 20rem;
+    align-items: center;
+    margin-right: 17rem;
   }
 
-.landingInfo h1{
-    margin: 0 0 20px 0;
-    color:white;
+.landingInfo p{
+    color: black;
+    font-size: 7rem;
+    font-weight: bolder;
+    letter-spacing: -7px;
+    margin: 0;
+}
+.landingInfo h2{
+    color: black;
+    margin: 0 0 35px 0;
 }
 
 .landingInfo button{
     width: 10rem;
-    height: 2rem;
-    background-color: #ffb703;
+    height: 3rem;
+    background-color: #EDD62D;
     color: black;
-    border: 1px solid #023e8a;
-    border-radius: 2px;
+    border: 1px solid white;
+    border-radius: 4px;
 }
 
 .landingInfo button:hover{
-    background-color: #0a8754;
+    background-color: #E69413;
     border: 1px solid white;
     color: white;
 }

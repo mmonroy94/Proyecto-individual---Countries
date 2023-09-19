@@ -1,5 +1,5 @@
 .navBarContainer{
-    background-color: #e2fdff;
+    background-color: #204939;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -10,23 +10,37 @@ img, p, .navLink, .searchBar{
 }
 
 .navBarContainer img{
-    height: 3rem;
-    padding-left: 1rem;
+    height: 50px;
+    padding: 0.2rem 1rem;
 }
 
 .navBarContainer p{
+    margin-left: 1rem;
     padding-right: 10rem;
-    font-weight: bold;
+    font-size: 30px;
+    letter-spacing: -2px;
+    font-weight: bolder;
+    color: #9EDDE1
+}
+
+.navBarContainer span{
+    color: #BFE9E0;
 }
 
 .navLink{
-    padding: 0 2rem;
+    padding: 0.5rem 1.5rem;
+    margin: 1rem 2rem 1rem 0;
+    border: 0.5px solid #204939;
     text-decoration: none;
-    color: black;
+    font-size: 17px;
+    color: white;
+    letter-spacing: 1px;
 }
 
 .navLink:hover{
-    color: #fb8500;
+    color: #EDD62D;
+    border: 0.5px solid #EDD62D;
+    border-radius: 20px;
 }
 
 

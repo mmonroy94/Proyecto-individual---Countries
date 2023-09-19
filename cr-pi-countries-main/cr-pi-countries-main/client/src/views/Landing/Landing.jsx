@@ -5,7 +5,8 @@ const Landing = () => {
     return(
         <div className={style.landingContainer}>
             <div className={style.landingInfo}>
-                <h1>¡Te damos la bienvenida!</h1>
+                <p>WELCOME</p>
+                <h2>Henry project - Countries</h2>
                 <NavLink to={'/home'}><button> Ingresar </button></NavLink>
             </div>
         </div>

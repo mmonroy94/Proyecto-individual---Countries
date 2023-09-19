@@ -1,12 +1,10 @@
-import { GET_COUNTRIES, GET_COUNTRY_BY_ID, GET_COUNTRY_BY_NAME, ORDER_BY_NAME, ORDER_BY_POPULATION, GET_ACTIVITIES, FILTER_BY_CONTINENT, CLEAR_FILTERS_ORDERS, DELETE_ACTIVITY } from "./action-types";
+import { GET_COUNTRIES, GET_COUNTRY_BY_NAME, ORDER_BY_NAME, ORDER_BY_POPULATION, GET_ACTIVITIES, FILTER_BY_CONTINENT, CLEAR_FILTERS_ORDERS, DELETE_ACTIVITY, ORDER_ACTIVITIES } from "./action-types";
 
 const initialState = {
     countries: [],
     countriesCopy: [],
-    countryDetail: [],
     activities: [],
     activitiesCopy: [],
-
 }
 
 const reducer = (state = initialState, action) => {
@@ -24,12 +22,6 @@ const reducer = (state = initialState, action) => {
                     countries: action.payload,
                     countriesCopy: action.payload
                 }
-
-        case GET_COUNTRY_BY_ID:
-            return{
-                ...state,
-                countryDetail: action.payload
-            }
 
         case ORDER_BY_NAME:
             const dataCopy = [...state.countries];
@@ -87,6 +79,22 @@ const reducer = (state = initialState, action) => {
                 activities: action.payload,
                 activitiesCopy: action.payload
             }
+
+        case ORDER_ACTIVITIES:
+            const activitiesDataCopy = [...state.activities];
+            const activitiesSortedByName = activitiesDataCopy.sort((a, b) => {
+              const nameA = a.name.toLowerCase();
+              const nameB = b.name.toLowerCase();
+              if (action.payload === "ASC") {
+                return nameA.localeCompare(nameB);
+              } else if (action.payload === "DES") {
+                return nameB.localeCompare(nameA);
+              }
+            });
+            return {
+              ...state,
+              activities: activitiesSortedByName
+            };
 
         case DELETE_ACTIVITY:
             const activitiesUpdate = [...state.activitiesCopy].filter(activity =>activity.id !== action.payload)

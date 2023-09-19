@@ -2,13 +2,17 @@ import style from './ActCard.module.css'
 
 const ActCard = ({id,name,difficulty,duration,seasons, countries, onClose}) => {
     return(
-        <div className={style.actCardContainer}>
-            <p>Name: {name}</p>
-            <p>Difficulty: {difficulty}</p>
-            <p>Duration: {duration}</p>
-            <p>Seasons: {seasons}</p>
-            <p>Countries: {countries}</p>
-            <button onClick={()=>onClose(id)}>X</button>
+        <div className={style.activityCardContainer}>
+            <div className={style.activityInfo}>
+                <p>{name}</p>
+                <p>Difficulty: {difficulty}</p>
+                <p>Duration: aprox. {duration} hours</p>
+                <p>Seasons: {seasons}</p>
+                <p>Countries: {countries}</p>
+            </div>
+            <div>
+                <button onClick={()=>onClose(id)} className={style.activityDeleteButton}>X</button>
+            </div>
         </div>
     )
 }

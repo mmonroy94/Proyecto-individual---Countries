@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux"
 import { getCountries } from "../../redux/actions";
+import { NavLink } from 'react-router-dom';
 import style from './SearchBar.module.css'
 
 const SearchBar = () => {
@@ -20,8 +21,9 @@ const SearchBar = () => {
     return (
         <div className={style.searchBarContainer}>
             
-            <input type="search" value={name} onChange={handleChange}/>
-            <button onClick={()=> onSearch(name)}>Buscar</button>
+            <input type="search" value={name} onChange={handleChange} />
+            <NavLink to={'/home'}> <button onClick={()=> onSearch(name)}>Search</button> </NavLink>
+            
         </div>
     )
 }

@@ -9,8 +9,11 @@ const Card = ({id,image,name,continent}) => {
             <NavLink to={`/detail/${id}`}>
             <img src={image} alt={id}/>
             </NavLink>
-            <p>{name}</p>
-            <p>Continent: {continent}</p>
+            <div className={style.textContainer}>
+                <p>{name}</p>
+                <p>Continent: {continent}</p>
+            </div>
+            
             
         </div>
     )
