@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_COUNTRIES, GET_COUNTRY_BY_ID, GET_COUNTRY_BY_NAME, ORDER_BY_NAME, GET_ACTIVITIES, ORDER_BY_POPULATION, FILTER_BY_CONTINENT, DELETE_ACTIVITY } from "./action-types";
+import { GET_COUNTRIES, GET_COUNTRY_BY_ID, GET_COUNTRY_BY_NAME, ORDER_BY_NAME, GET_ACTIVITIES, ORDER_BY_POPULATION, FILTER_BY_CONTINENT, CLEAR_FILTERS_ORDERS, DELETE_ACTIVITY } from "./action-types";
 
 export const getCountries = (name) => {
     return async function (dispatch) {
@@ -51,6 +51,16 @@ export const filterByContinent = (continent) => {
     return async function (dispatch){
         try {
             dispatch({ type:FILTER_BY_CONTINENT, payload:continent})
+        }catch (error) {
+            alert(error.response.data) 
+        }
+    }
+}
+
+export const clearFiltersAndOrders = () => {
+    return async function (dispatch){
+        try {
+            dispatch({ type:CLEAR_FILTERS_ORDERS})
         }catch (error) {
             alert(error.response.data) 
         }

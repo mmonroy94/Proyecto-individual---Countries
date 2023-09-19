@@ -1,11 +1,12 @@
-import { GET_COUNTRIES, GET_COUNTRY_BY_ID, GET_COUNTRY_BY_NAME, ORDER_BY_NAME, ORDER_BY_POPULATION, GET_ACTIVITIES, FILTER_BY_CONTINENT, DELETE_ACTIVITY } from "./action-types";
+import { GET_COUNTRIES, GET_COUNTRY_BY_ID, GET_COUNTRY_BY_NAME, ORDER_BY_NAME, ORDER_BY_POPULATION, GET_ACTIVITIES, FILTER_BY_CONTINENT, CLEAR_FILTERS_ORDERS, DELETE_ACTIVITY } from "./action-types";
 
 const initialState = {
     countries: [],
     countriesCopy: [],
     countryDetail: [],
     activities: [],
-    activitiesCopy: []
+    activitiesCopy: [],
+
 }
 
 const reducer = (state = initialState, action) => {
@@ -31,25 +32,53 @@ const reducer = (state = initialState, action) => {
             }
 
         case ORDER_BY_NAME:
-            return{
-                ...state,
-                countries : action.payload === 'ASC'
-                ? [...state.countriesCopy].slice().sort((a,b)=>a.name.localeCompare(b.name))
-                : [...state.countriesCopy].slice().sort((a,b)=>b.name.localeCompare(a.name))
-            }
+            const dataCopy = [...state.countries];
+            const countriesSortedByName = dataCopy.sort((a, b) => {
+              const nameA = a.name.toLowerCase();
+              const nameB = b.name.toLowerCase();
+              if (action.payload === "ASC") {
+                return nameA.localeCompare(nameB);
+              } else if (action.payload === "DES") {
+                return nameB.localeCompare(nameA);
+              }
+            });
+            return {
+              ...state,
+              countries: countriesSortedByName,
+            };  
 
         case ORDER_BY_POPULATION:
-            return{
-                ...state,
-                countries : action.payload === 'POPASC'
-                ? [...state.countriesCopy].sort((a,b)=>(a.population - b.population))
-                : [...state.countriesCopy].sort((a,b)=>(b.population - a.population))
-            }
+            const dataCopy2 = [...state.countries];
+            const countriesSortedByPop = dataCopy2.sort((a, b) => {
+              const valueA = a.population;
+              const valueB = b.population;
+              if (action.payload === "POPASC") {
+                return valueA - valueB;
+              } else {
+                return valueB - valueA;
+              }
+            });
+            return {
+              ...state,
+              countries: countriesSortedByPop,
+            };
     
         case FILTER_BY_CONTINENT:
+            const dataCopy3 = [...state.countriesCopy];
+            const filterByContinent = dataCopy3.filter(
+              (con) => con.continent === action.payload
+            );
+            return { 
+                ...state, 
+                countries: filterByContinent 
+            };
+
+        case CLEAR_FILTERS_ORDERS:
             return{
                 ...state,
-                countries: [...state.countriesCopy].filter(country => country.continent.includes(action.payload))
+                countries: [...state.countriesCopy],
+                orderedCountries: [],
+                filteredCountries: []
             }
         
         case GET_ACTIVITIES:
