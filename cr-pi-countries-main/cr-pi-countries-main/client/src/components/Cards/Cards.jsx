@@ -1,14 +1,15 @@
 import Card from "../Card/Card"
 import { useState } from "react"
-import { useDispatch } from "react-redux"
-import { orderCards, filterByContinent, clearFiltersAndOrders } from "../../redux/actions"
+import { useDispatch, useSelector } from "react-redux"
+import { orderCards, filterByContinent, clearFiltersAndOrders, getCountries } from "../../redux/actions"
 import style from './Cards.module.css'
 
 const Cards = ({countries}) => {
     const dispatch = useDispatch();
+    const allCountries = useSelector(state=>state.countriesCopy)
 
     const [continents,setContinents] = useState([])
-    countries.forEach(country => {
+    allCountries.forEach(country => {
         if(!continents.includes(country.continent)){
             setContinents([...continents,country.continent])
         }
@@ -75,6 +76,7 @@ const Cards = ({countries}) => {
     // LIMPIEZA DE FILTROS Y ORDENAMIENTOS
     const restartResults = () => {
         dispatch(clearFiltersAndOrders())
+        dispatch(getCountries())
         setOrder({alphOrder:false,populationOrder:false})
         setFilter({continentFilter:false})
     }
