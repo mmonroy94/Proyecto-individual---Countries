@@ -31,3 +31,8 @@
     width: 70%;
     text-align: center;
 }
+
+.activitiesMessage{
+    display: flex;
+    align-items: center;
+}

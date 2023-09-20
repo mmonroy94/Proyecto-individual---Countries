@@ -2,7 +2,6 @@ import Cards from "../../components/Cards/Cards"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getCountries } from "../../redux/actions"
-import style from './Home.module.css'
 
 const Home = () => {
     const dispatch = useDispatch(); 
@@ -15,7 +14,7 @@ const Home = () => {
     },[])
    
     return(
-        <div className={style.homeContainer}>
+        <div>
             <Cards countries = {countries}/>
         </div>
     )

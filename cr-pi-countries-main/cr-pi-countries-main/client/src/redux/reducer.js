@@ -19,8 +19,7 @@ const reducer = (state = initialState, action) => {
             case GET_COUNTRY_BY_NAME:
                 return{
                     ...state, 
-                    countries: action.payload,
-                    countriesCopy: action.payload
+                    countries: action.payload
                 }
 
         case ORDER_BY_NAME:

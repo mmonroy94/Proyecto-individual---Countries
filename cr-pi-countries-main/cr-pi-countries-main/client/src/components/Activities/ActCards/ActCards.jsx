@@ -28,6 +28,8 @@ const ActCards = () => {
     const lastItemIndex = page * cardsPerPage; 
     const firstItemIndex = lastItemIndex - cardsPerPage;
     const currentCards = activities?.slice(firstItemIndex, lastItemIndex)
+    const totalItems = activities.length;
+    const totalPages = Math.ceil(totalItems / cardsPerPage)
 
     const nextPage = () => {
         if (page < Math.ceil(activities.length / cardsPerPage)) {
@@ -51,7 +53,7 @@ const ActCards = () => {
 
     return(
         <div>
-            <h3>Activities</h3>
+            <h3 className={style.activitySectionTitle}>Created activities</h3>
             <div className={style.filtersContainer}>
                 <p>Sort by:</p>
                 <select onChange={handleOrder}>
@@ -80,9 +82,10 @@ const ActCards = () => {
             
             <div className={style.pageNavigatorContainer}>
                 <button onClick={previousPage}>🡨</button>
-                <p>Página actual: {page}</p>
+                <p>Showing {page} of {totalPages} pages</p>
                 <button onClick={nextPage}>🡪</button>
             </div>
+            
         </div>
     )
 }

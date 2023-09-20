@@ -30,7 +30,7 @@ const Detail = () => {
                 <p>Population: {country.population}</p>
             </div>
             <div>
-                {country.Activities && country.Activities.length>0 ? <ActCards activities={country.Activities} /> : <p>No hay actividades asociadas a este país</p>}
+                {country.Activities && country.Activities.length>0 ? <ActCards activities={country.Activities} /> : <></>}
             </div>
 
         </div>

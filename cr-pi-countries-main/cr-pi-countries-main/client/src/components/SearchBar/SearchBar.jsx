@@ -21,7 +21,7 @@ const SearchBar = () => {
     return (
         <div className={style.searchBarContainer}>
             
-            <input type="search" value={name} onChange={handleChange} />
+            <input type="search" value={name} onChange={handleChange} placeholder='Search by country name'/>
             <NavLink to={'/home'}> <button onClick={()=> onSearch(name)}>Search</button> </NavLink>
             
         </div>

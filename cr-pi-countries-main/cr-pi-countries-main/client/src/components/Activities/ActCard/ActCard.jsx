@@ -4,7 +4,7 @@ const ActCard = ({id,name,difficulty,duration,seasons, countries, onClose}) => {
     return(
         <div className={style.activityCardContainer}>
             <div className={style.activityInfo}>
-                <p>{name}</p>
+                <p className={style.activityName}>{name}</p>
                 <p>Difficulty: {difficulty}</p>
                 <p>Duration: aprox. {duration} hours</p>
                 <p>Seasons: {seasons}</p>

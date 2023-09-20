@@ -1,3 +1,9 @@
+.activitySectionTitle{
+    text-align: center;
+    font-size: 30px;
+    margin: 1rem 0 0 0
+}
+
 .filtersContainer{
     display: flex;
     justify-content:center;

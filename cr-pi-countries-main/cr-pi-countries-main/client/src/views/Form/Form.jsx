@@ -144,10 +144,10 @@ const Form = () => {
                 
                 <label>Activity name *</label>
                 <input name='activityName' onChange={handleChange} type="text" />
-                <label className={style.formError}>{error.activityName}</label>
+                <label className={style.formErrorMessage}>{error.activityName}</label>
 
                 <label>Difficulty *</label>
-                <select name="difficulty" onChange={handleChange}>
+                <select name="difficulty" onChange={handleChange} className={style.activitySelectGroup}>
                     <option value={''}>-- Choose one option --</option>
                     <option value={1} key={1}>Easy</option>
                     <option value={2} key={2}>Medium-Easy</option>
@@ -155,51 +155,52 @@ const Form = () => {
                     <option value={4} key={4}>Medium-Hard</option>
                     <option value={5} key={5}>Hard</option>
                 </select>
-                <label className={style.formError}>{error.difficulty}</label>
+                <label className={style.formErrorMessage}>{error.difficulty}</label>
 
                 <label>Approximate duration in hours - optional</label>
                 <input name='duration' onChange={handleChange} type="text"/>
-                <label className={style.formError}>{error.duration}</label>
+                <label className={style.formErrorMessage}>{error.duration}</label>
 
                 <label>Seasons *</label>
-                <select name='seasons' onChange={handleChange}>
+                <select name='seasons' onChange={handleChange} className={style.activitySelectGroup}>
                     <option value={''}>-- Choose at least one option --</option>
                     {seasons.map(season=> <option value={season} id={season} key={season}> {season} </option>)}
                 </select>
-                <label className={style.formError}>{error.seasons}</label>
+                <label className={style.formErrorMessage}>{error.seasons}</label>
 
-                <div>
+                <div className={style.selectedGroup}>
                     {
                         state.seasons.map((element)=> 
-                            <div>
-                                <label >{element}</label> <button name='seasons' id={element} key={element} onClick={handleDelete}>X</button>
+                            <div className={style.selectedSeason}>
+                                <label
+                             >{element}</label> <button name='seasons' id={element} key={element} onClick={handleDelete} className={style.deleteSelected}>X</button>
                             </div>)
                     }
                 </div>
 
                 <label>Countries *</label>
-                <select name='countryId' onChange={handleChange}>
+                <select name='countryId' onChange={handleChange} className={style.activitySelectGroup}>
                     <option value={''}>-- Choose at least one option --</option>
                     {countriesData?.map(country=><option value={country.id} key={country.id}>{country.id} - {country.name}</option>)}
                 </select>
-                <label className={style.formError}>{error.countryId}</label>
+                <label className={style.formErrorMessage}>{error.countryId}</label>
 
-                <div>
+                <div className={style.selectedGroup}>
                     {
                         state.countryId.map((element)=> {
                             const countryName = countriesData.find(
                                 (country) => country.id === element
                             )
                             return (
-                                <div>
-                                    <label>{element} - {countryName.name}</label> <button name='countryId' key={element} id={element} onClick={handleDelete}>X</button>
+                                <div className={style.selectedCountry}>
+                                    <label>{element} - {countryName.name}</label> <button name='countryId' key={element} id={element} onClick={handleDelete} className={style.deleteSelected}>X</button>
                                 </div>
                             )
                         })
                     }
                 </div>
                 
-                <button disabled={disableByErrors() || disableByEmptyProps()} type="submit">Submit</button>
+                <button className={style.submitButton} disabled={disableByErrors() || disableByEmptyProps()} type="submit">Submit</button>
             </form>
 
             <div>

@@ -2,24 +2,42 @@
     width: 48rem;
     height: 8rem;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     border-radius: 3px;
-    color: black;
     margin: 5px;
     box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+    background-image: url('./activitiesImage.png');
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url('./activitiesImage.png');
     background-position:100%;
     padding: 5px 15px;
     margin-right: 2rem;
 }
 
+.activityInfo{
+    color: #204939;
+    margin-left: 5px
+}
+
+.activityName{
+    font-weight: bold;
+}
+
 .activityDeleteButton{
     width: 2rem;
     height: 2rem;
-    margin: 0.2rem;
-    position: relative;
-    top: 0;
-    right: 0;
-    
+    margin: 0.2rem; 
+    background-color: #204939;
+    border-radius: 3px;
+    border: 1px solid white;
+    font-weight: bold;
+    color: white
+}
+
+.activityDeleteButton:hover{
+    color: #204939;
+    font-weight: bold;
+    background-color: #EDD62D;
+    border: 1px solid #EDD62D;
 }
