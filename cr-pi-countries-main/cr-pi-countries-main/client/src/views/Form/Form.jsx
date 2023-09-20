@@ -16,7 +16,7 @@ const Form = () => {
         seasons:[],
         countryId: []
     })
-
+    
     // state para manejo de errores
     const [error, setError] = useState({
         activityName:'Activity name required',
@@ -25,7 +25,7 @@ const Form = () => {
         seasons: '',
         countryId:''
     })
-    console.log(error);
+  
 
     // Validación errores - Al asociar prop estamos validando un único input y si no lo especificamos estaríamos validando todos los inputs al mismo tiempo
     const formValidation = (stateAux, prop)=>{
@@ -122,7 +122,8 @@ const Form = () => {
 
     // Guardar información en la db
 
-    const activityPost = () => {
+    const activityPost = (event) => {
+        event.preventDefault();
         dispatch(postActivity(activityState))
     }
 
@@ -201,7 +202,7 @@ const Form = () => {
                     }
                 </div>
 
-                <button disabled={disableByErrors() || disableByEmptyProps()}  className={style.submitButton} type="submit">Submit</button>
+                <button disabled={disableByErrors() || disableByEmptyProps()} className={style.submitButton} type="submit">Submit</button>
             </form>
 
             <div>
