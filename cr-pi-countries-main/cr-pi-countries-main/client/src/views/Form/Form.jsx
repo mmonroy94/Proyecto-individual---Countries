@@ -122,8 +122,7 @@ const Form = () => {
 
     // Guardar información en la db
 
-    const activityPost = (event) => {
-        event.preventDefault();
+    const activityPost = () => {
         dispatch(postActivity(activityState))
     }
 

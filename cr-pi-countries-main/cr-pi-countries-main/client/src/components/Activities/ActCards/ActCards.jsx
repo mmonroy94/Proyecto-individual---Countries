@@ -1,18 +1,18 @@
 import ActCard from '../ActCard/ActCard'
 import { useDispatch } from "react-redux"
 import { useState } from "react"
-import { deleteActivity, orderActivities, getActivities } from '../../../redux/actions'
+import { deleteActivity, orderActivities } from '../../../redux/actions'
 import style from './ActCards.module.css'
 
 const ActCards = ({activities}) => {
     const dispatch = useDispatch()
     
-        //ordenamiento
-        const handleOrder = (event) => {
-            console.log(event.target.value);
-            dispatch(orderActivities(event.target.value)) && dispatch(getActivities())
-            setPage(1)  
-        }    
+    //ordenamiento
+    const handleOrder = (event) => {
+        console.log(event.target.value);
+        dispatch(orderActivities(event.target.value))
+        setPage(1)  
+    }    
 
     //paginado
     const [page,setPage] = useState(1)
@@ -38,8 +38,6 @@ const ActCards = ({activities}) => {
     const onClose = (id) => {
         dispatch(deleteActivity(id))
      };
-
-
 
     return(
         <div>

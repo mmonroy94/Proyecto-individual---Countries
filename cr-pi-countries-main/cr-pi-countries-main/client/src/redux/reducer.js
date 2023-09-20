@@ -82,8 +82,8 @@ const reducer = (state = initialState, action) => {
         case ORDER_ACTIVITIES:
             const activitiesDataCopy = [...state.activities];
             const activitiesSortedByName = activitiesDataCopy.sort((a, b) => {
-              const nameA = a.name.toLowerCase();
-              const nameB = b.name.toLowerCase();
+              const nameA = a.activityName.toLowerCase();
+              const nameB = b.activityName.toLowerCase();
               if (action.payload === "ASC") {
                 return nameA.localeCompare(nameB);
               } else if (action.payload === "DES") {
