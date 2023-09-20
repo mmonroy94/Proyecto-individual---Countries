@@ -1,26 +1,17 @@
 import ActCard from '../ActCard/ActCard'
-import { useState, useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useState } from "react"
 import { deleteActivity, orderActivities, getActivities } from '../../../redux/actions'
 import style from './ActCards.module.css'
 
-const ActCards = () => {
-    const dispatch = useDispatch()
-    const [order,setOrder] = useState('')
-
-    useEffect(()=>{
-        dispatch(getActivities())
-    },[])
-
+const ActCards = ({activities}) => {
+   console.log('ESTAS SON LAS ACTIVITIES')
+   console.log(activities);
         //ordenamiento
         const handleOrder = (event) => {
             console.log(event.target.value);
             dispatch(orderActivities(event.target.value)) && dispatch(getActivities())
             setPage(1)  
         }    
-
-             
-    const activities = useSelector(state=>state.activities)
 
     //paginado
     const [page,setPage] = useState(1)

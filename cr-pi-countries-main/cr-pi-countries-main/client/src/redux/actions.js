@@ -56,7 +56,7 @@ export const clearFiltersAndOrders = () => {
 }
 
 export const postActivity = (state) => {
-    return async function (){ 
+    return async function (){
         try {
             await axios.post('http://localhost:3001/activities/',state)
             alert('Actividad creada exitosamente!')

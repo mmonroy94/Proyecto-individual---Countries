@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { getCountries, postActivity } from "../../redux/actions"
+import { getCountries, postActivity, getActivities } from "../../redux/actions"
 import { useSelector } from "react-redux"
 import ActCards from '../../components/Activities/ActCards/ActCards'
 import style from './Form.module.css'
@@ -13,7 +13,7 @@ const Form = () => {
         activityName:'',
         difficulty: '',
         duration: 0,
-        seasons:[], 
+        seasons:[],
         countryId: []
     })
     console.log(state);
@@ -28,7 +28,7 @@ const Form = () => {
     })
     console.log(error);
 
-    // Validación errores - Al asociar prop estamos validando un único input y si no lo especificamos estaríamos validando todos los inputs al mismo tiempo 
+    // Validación errores - Al asociar prop estamos validando un único input y si no lo especificamos estaríamos validando todos los inputs al mismo tiempo
     const formValidation = (stateAux, prop)=>{
         if(prop === 'activityName') {
             if(stateAux.activityName === ''){
@@ -86,7 +86,7 @@ const Form = () => {
         // El segundo parametro corresponde a la prop del state que estamos validando
         formValidation({
             ...state,[event.target.name]: event.target.value
-            }, event.target.name)  
+            }, event.target.name)
     }
 
     const handleDelete = (event) => {
@@ -106,10 +106,10 @@ const Form = () => {
                 disabledAux = true;
                 break
             }
-        }  
+        }
             return disabledAux;
     }
-    
+
     const disableByEmptyProps = ()=>{
         let disabledAux = true;
             if(state.activityName === '' || state.difficulty.length < 1 || state.difficulty.length > 5 || state.seasons.length < 1 || state.countryId.length < 1) {
@@ -129,19 +129,20 @@ const Form = () => {
     // Renderización de activities y ordenamiento
 
     const dispatch = useDispatch()
-    // const activities = useSelector(state=>state.activities)
     const countriesData = useSelector(state=>state.countries)
+    const activities = useSelector(state=>state.activities)
 
     useEffect(()=>{
             dispatch(getCountries())
+            dispatch(getActivities())
     },[])
 
 
     return(
         <div className={style.formContainer}>
             <form onSubmit={activityPost} className={style.formInfo}>
-                <h2>Create an activity</h2> 
-                
+                <h2>Create an activity</h2>
+
                 <label>Activity name *</label>
                 <input name='activityName' onChange={handleChange} type="text" />
                 <label className={style.formErrorMessage}>{error.activityName}</label>
@@ -170,7 +171,7 @@ const Form = () => {
 
                 <div className={style.selectedGroup}>
                     {
-                        state.seasons.map((element)=> 
+                        state.seasons.map((element)=>
                             <div className={style.selectedSeason}>
                                 <label
                              >{element}</label> <button name='seasons' id={element} key={element} onClick={handleDelete} className={style.deleteSelected}>X</button>
@@ -199,14 +200,14 @@ const Form = () => {
                         })
                     }
                 </div>
-                
+
                 <button className={style.submitButton} disabled={disableByErrors() || disableByEmptyProps()} type="submit">Submit</button>
             </form>
 
             <div>
-                
-                
-                <ActCards />
+
+
+                <ActCards activities={activities}/>
             </div>
         </div>
     )

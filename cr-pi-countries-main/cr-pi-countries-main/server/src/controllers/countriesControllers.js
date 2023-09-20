@@ -1,5 +1,4 @@
 const { Country, Activity } = require('../db');
-
 const { Op } = require('sequelize');
 
  const getAllCountries = async (name) => {     
@@ -8,23 +7,41 @@ const { Op } = require('sequelize');
             where: {
               name: { 
                 [Op.iLike]: `%${name}%` 
-              },
-            }
+              }
+            }, 
+              include: [
+                {
+                  model: Activity,
+                  as: 'Activities',
+                  attributes: ['id',"activityName", "difficulty", "duration", "seasons"],
+                  through: { attributes: [] },
+                }
+              ]
+          
           })
 
         return querySearch;
     }else{
-        return await Country.findAll();
+        return await Country.findAll(
+          {include: [
+            {
+              model: Activity,
+              as: 'Activities',
+              attributes: ['id',"activityName", "difficulty", "duration", "seasons"]
+            }
+          ]}
+        );
     }
 }
 
 const getCountriesById = async (id) => {
   const countryResponse = await Country.findByPk(id, {
-    include: {
+    include: [
+      {
       model: Activity,
       as: 'Activities',
       attributes: ['id','activityName', 'difficulty', 'duration', 'seasons']
-    }
+    }]
   });
   return countryResponse;
 }

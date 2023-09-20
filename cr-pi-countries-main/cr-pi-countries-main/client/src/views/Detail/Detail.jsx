@@ -1,12 +1,21 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getActivities } from "../../redux/actions";
 import axios from 'axios'
 import ActCards from "../../components/Activities/ActCards/ActCards";
 import style from './Detail.module.css'
 
 const Detail = () => {
     const { id } = useParams()
-    const [country, setCountry] = useState({});
+    const [country,setCountry] = useState([])
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+        dispatch(getActivities())
+    },[])
+
+    const activities = useSelector(state=>state.activities)
 
     useEffect(() => {
         axios
@@ -16,7 +25,14 @@ const Detail = () => {
             alert("Error al obtener los detalles.");
           });
       }, [id]);
-      console.log(country.Activities);
+
+      console.log(activities);
+
+    const filteredActivities = activities.filter((activity) => (
+        activity.Countries && activity.Countries.some(country => country.id === id)
+    ));
+
+
     return(
         <div className={style.detailContainer}>
             <div className={style.countryDetail} key={id}>
@@ -30,7 +46,10 @@ const Detail = () => {
                 <p>Population: {country.population}</p>
             </div>
             <div>
-                {country.Activities && country.Activities.length>0 ? <ActCards activities={country.Activities} /> : <></>}
+                
+            <ActCards activities={filteredActivities}/>
+
+
             </div>
 
         </div>
