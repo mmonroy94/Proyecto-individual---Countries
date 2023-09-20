@@ -1,11 +1,12 @@
 import ActCard from '../ActCard/ActCard'
+import { useDispatch } from "react-redux"
 import { useState } from "react"
 import { deleteActivity, orderActivities, getActivities } from '../../../redux/actions'
 import style from './ActCards.module.css'
 
 const ActCards = ({activities}) => {
-   console.log('ESTAS SON LAS ACTIVITIES')
-   console.log(activities);
+    const dispatch = useDispatch()
+    
         //ordenamiento
         const handleOrder = (event) => {
             console.log(event.target.value);
@@ -33,8 +34,6 @@ const ActCards = ({activities}) => {
             setPage(page - 1);
         }
     }
-
-
 
     const onClose = (id) => {
         dispatch(deleteActivity(id))
@@ -64,7 +63,7 @@ const ActCards = ({activities}) => {
                         duration = {activity.duration}
                         seasons = {activity.seasons?.map(season => season).join(', ')}                       
                         countries = {activity.Countries?.map(country => country.name).join(', ')}
-                        onClose = {onClose}
+                        onClose = {()=>onClose(activity.id)}
                     />
     
                     })

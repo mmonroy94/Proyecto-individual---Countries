@@ -20,8 +20,7 @@ module.exports = (sequelize) => {
         },
         duration: {
           type: DataTypes.INTEGER,
-          validate: { min: 1, max: 24},
-          allowNull: true,
+          allowNull: true
         },
         seasons: {
           type: DataTypes.ARRAY(DataTypes.STRING),

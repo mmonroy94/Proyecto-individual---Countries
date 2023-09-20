@@ -9,14 +9,13 @@ const Form = () => {
     const seasons = ['Summer', 'Autumn', 'Winter', 'Spring']
 
     // state contenedor de la información ingresada al form
-    const [state, setState] = useState({
+    const [activityState, setActivityState] = useState({
         activityName:'',
         difficulty: '',
         duration: 0,
         seasons:[],
         countryId: []
     })
-    console.log(state);
 
     // state para manejo de errores
     const [error, setError] = useState({
@@ -46,6 +45,7 @@ const Form = () => {
 
         if(prop === 'duration') {
             if( stateAux.duration === ''){
+                setActivityState({...activityState, duration: null})
                 setError({...error, duration:''})
             }else if(stateAux.duration < 1 || stateAux.duration > 24 || Number.isInteger(stateAux.duration) || isNaN(Number(stateAux.duration))){
                 setError({...error, duration:'Duration must be a number between 1 and 24'})
@@ -70,29 +70,29 @@ const Form = () => {
     const handleChange = (event) =>{
         // Modificación del estado con la info recibida en el input
         if(event.target.name==="countryId" || event.target.name==="seasons"){
-            if(event.target.value==='') return state
-            if(event.target.name==="countryId" ? !state.countryId.includes(event.target.value) : !state.seasons.includes(event.target.value)){
-                return setState({
-                        ...state,
-                        [event.target.name]: [...state[event.target.name], event.target.value]
+            if(event.target.value==='') return activityState
+            if(event.target.name==="countryId" ? !activityState.countryId.includes(event.target.value) : !activityState.seasons.includes(event.target.value)){
+                return setActivityState({
+                        ...activityState,
+                        [event.target.name]: [...activityState[event.target.name], event.target.value]
                       })
             }}else{
-                setState({
-                    ...state,
+                setActivityState({
+                    ...activityState,
                     [event.target.name]: event.target.value
                     })}
 
         // Primer parametro una copia del estado + la prop modificada para no esperar el re-renderizado y hacer la validación en tiempo real.
         // El segundo parametro corresponde a la prop del state que estamos validando
         formValidation({
-            ...state,[event.target.name]: event.target.value
+            ...activityState,[event.target.name]: event.target.value
             }, event.target.name)
     }
 
     const handleDelete = (event) => {
-        setState({
-        ...state,
-        [event.target.name]: [...state[event.target.name].filter(element=> element!==event.target.id)]
+        setActivityState({
+        ...activityState,
+        [event.target.name]: [...activityState[event.target.name].filter(element=> element!==event.target.id)]
         })
 
     }
@@ -112,7 +112,7 @@ const Form = () => {
 
     const disableByEmptyProps = ()=>{
         let disabledAux = true;
-            if(state.activityName === '' || state.difficulty.length < 1 || state.difficulty.length > 5 || state.seasons.length < 1 || state.countryId.length < 1) {
+            if(activityState.activityName === '' || activityState.difficulty.length < 1 || activityState.difficulty.length > 5 || activityState.seasons.length < 1 || activityState.countryId.length < 1) {
                 disabledAux = true;
             }else{
                 disabledAux = false;
@@ -123,7 +123,7 @@ const Form = () => {
     // Guardar información en la db
 
     const activityPost = () => {
-        dispatch(postActivity(state))
+        dispatch(postActivity(activityState))
     }
 
     // Renderización de activities y ordenamiento
@@ -171,7 +171,7 @@ const Form = () => {
 
                 <div className={style.selectedGroup}>
                     {
-                        state.seasons.map((element)=>
+                        activityState.seasons.map((element)=>
                             <div className={style.selectedSeason}>
                                 <label
                              >{element}</label> <button name='seasons' id={element} key={element} onClick={handleDelete} className={style.deleteSelected}>X</button>
@@ -188,7 +188,7 @@ const Form = () => {
 
                 <div className={style.selectedGroup}>
                     {
-                        state.countryId.map((element)=> {
+                        activityState.countryId.map((element)=> {
                             const countryName = countriesData.find(
                                 (country) => country.id === element
                             )
@@ -201,7 +201,7 @@ const Form = () => {
                     }
                 </div>
 
-                <button className={style.submitButton} disabled={disableByErrors() || disableByEmptyProps()} type="submit">Submit</button>
+                <button disabled={disableByErrors() || disableByEmptyProps()}  className={style.submitButton} type="submit">Submit</button>
             </form>
 
             <div>
